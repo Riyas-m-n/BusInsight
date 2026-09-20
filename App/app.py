@@ -122,7 +122,7 @@ def main():
 
         st.markdown("---")
         st.caption(
-            "**Historical Prototype Notice**: Predictions reflect historical transit distributions (July–Sept 2024) "
+            "**Historical Prototype Notice**: Predictions reflect historical transit distributions (July 29 – September 21, 2024) "
             "using strictly pre-journey features. Not a live GPS tracking feed or dynamic traffic ETA."
         )
 

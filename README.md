@@ -7,7 +7,7 @@ The platform translates **15.2 million stop-to-stop journey observations** acros
 2. **Transit Planners (Operations Dashboard):** Empirical corridor intelligence covering directional travel-time asymmetry, segment variability, dwell dynamics, and hop-length scaling.
 
 > [!NOTE]
-> **Prototype Scope Notice:** BusInsight is a historical analytical and predictive prototype based on observed transit data (July–September 2024). It is **not** a live bus-tracking system and does not claim real-time GPS feeds, live vehicle positions, or traffic-aware dynamic ETAs.
+> **Prototype Scope Notice:** BusInsight is a historical analytical and predictive prototype based on observed transit data (July 29 – September 21, 2024). It is **not** a live bus-tracking system and does not claim real-time GPS feeds, live vehicle positions, or traffic-aware dynamic ETAs.
 
 ---
 
@@ -42,7 +42,7 @@ The system analyzes automated vehicle location (AVL) tracking records combined w
 ## 3. SQL Analytics & Key Operational Findings
 
 SQL queries run against a lightweight, view-backed DuckDB catalog (`SQL/businsight.duckdb`):
-- **Directional Asymmetry:** Route 12 exhibits substantial structural asymmetry: Direction 1 (Outbound) median journey duration is **21.0 minutes** versus **17.5 minutes** for Direction 2 (Inbound) — a **3.5 min (20.0%) differential**. In contrast, Route 10 is tightly balanced (20.3 min vs 19.9 min).
+- **Directional Asymmetry:** Direction 2 (Inbound) exhibits longer median journey durations across all three routes (longer by 1.34 to 2.36 min). Specifically on Route 12, Direction 2 median journey duration is **21.97 minutes** versus **20.63 minutes** for Direction 1 (Outbound) — an approximately **1.34 min (80.0s) differential**.
 - **Corridor Segment Variability:** Identified **62 High-Variability Segments** ($N \ge 500, \text{IQR} \ge 68\text{s}$) across the 300 corridor segments where travel times fluctuate significantly.
 - **Dwell Dynamics:** Standard passenger stops exhibit median dwell times of **22.0 to 27.0 seconds** (accounting for 20% to 23% of segment run time), whereas terminal dispatch (Segment 1) reflects layover holding.
 - **Hop Scaling:** Journey duration increases monotonically with hop length, establishing hop count as the primary predictive baseline.

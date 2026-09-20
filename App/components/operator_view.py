@@ -118,7 +118,7 @@ def render_authenticated_operator():
     # -------------------------------------------------------------------------
     with tab_route:
         st.markdown("### Corridor Network Summary")
-        st.caption("Aggregated telemetry across 3 monitored trunk corridors over the full observation period (July–September 2024).")
+        st.caption("Aggregated telemetry across 3 monitored trunk corridors over the full observation period (July 29 – September 21, 2024).")
 
         df_routes = load_route_summary()
         col1, col2, col3, col4 = st.columns(4)
@@ -198,9 +198,9 @@ def render_authenticated_operator():
             <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 14px; margin-top: 14px; font-size: 0.9rem; color: #334155;">
                 <strong>Directional Findings:</strong>
                 <ul style="margin: 4px 0 0 16px; padding: 0;">
-                    <li><strong>Route 12 Asymmetry:</strong> Displays significant structural asymmetry: Direction 1 (Outbound) median is <strong>21.0 min</strong> versus <strong>17.5 min</strong> for Direction 2 (Inbound) &mdash; a <strong>3.5 min (20.0%) differential</strong>.</li>
-                    <li><strong>Route 10 Balance:</strong> Tightly balanced across directions (20.3 min Outbound vs 19.9 min Inbound).</li>
-                    <li><strong>Route 46 Duration:</strong> Largest overall travel times with 26.5 min Outbound and 25.8 min Inbound (P90 reaching 43.5 min).</li>
+                    <li><strong>Route 12 Asymmetry:</strong> Direction 2 (Inbound) median journey duration is <strong>21.97 min</strong> versus <strong>20.63 min</strong> for Direction 1 (Outbound) &mdash; an approximately <strong>1.34 min (80.0s) differential</strong>.</li>
+                    <li><strong>Direction 2 Consistently Longer:</strong> Across all three monitored routes, Direction 2 exhibits longer median journey durations than Direction 1 by <strong>1.34 to 2.36 minutes</strong> (Route 10: 23.68 min vs 21.32 min [+2.36 min]; Route 12: 21.97 min vs 20.63 min [+1.34 min]; Route 46: 25.15 min vs 23.12 min [+2.03 min]).</li>
+                    <li><strong>Route 46 Highest Corridor Duration:</strong> Exhibits the longest overall travel times across both directions (23.12 min Outbound and 25.15 min Inbound, with P90 reaching 65.00 min).</li>
                 </ul>
             </div>
         """, unsafe_allow_html=True)

@@ -21,7 +21,7 @@ Problem → Data → Data Quality → SQL / EDA → Feature Engineering → Base
 - **ML Model:** Trained and tuned a `HistGradientBoostingRegressor` (squared error / L2 loss) across 9.93M training records.
 - **Evaluation:** Evaluated on 2,281,911 out-of-time test observations. The model achieved an MAE of 189.54 seconds (3.16 min) and $R^2$ of 0.9290, yielding a 12.94-second (6.39%) MAE reduction over the baseline.
 - **Product Interface:** Built a modular, dual-persona Streamlit web application featuring a Passenger Journey Estimator and an Operator Corridor Intelligence Dashboard.
-- **Key Findings:** Discovered significant structural directional asymmetry on Route 12 (3.5 min / 20.0% difference between outbound and inbound), verified that travel time scales with hop length, and empirically mapped the top high-variability segments.
+- **Key Findings:** Discovered consistent directional travel-time differentials across all three routes (Direction 2 longer by 1.34 to 2.36 min; Route 12 differential: 1.34 min / 80.0s between 21.97 min Inbound and 20.63 min Outbound), verified that travel time scales with hop length, and empirically mapped the top high-variability segments.
 - **Limitations:** Historical predictive prototype based on observed telematics; does not include live GPS feeds, real-time traffic sensors, or passenger ridership counts.
 - **Future Scope:** Potential integration with real-time GTFS-RT feeds, automated passenger counter (APC) data, and signal priority APIs.
 
@@ -41,7 +41,7 @@ Problem → Data → Data Quality → SQL / EDA → Feature Engineering → Base
 - **Empirical Baseline:** Historical median lookup achieved $R^2 = 0.9171$ and $\text{MAE} = 202.48\text{s}$ (3.37 min).
 - **Machine Learning Model:** Gradient-boosted regression achieved $R^2 = 0.9290$ and $\text{MAE} = 189.54\text{s}$ (3.16 min) on 2.28M out-of-time test samples.
 - **Improvement:** 12.94-second (6.39%) MAE improvement and 26.76-second (7.45%) RMSE improvement.
-- **Operational Findings:** Quantified Route 12's 20.0% directional asymmetry and isolated 62 high-variability corridor segments.
+- **Operational Findings:** Quantified Route 12's 1.34 min (80.0s) directional asymmetry (with Direction 2 longer across all corridors) and isolated 62 high-variability corridor segments.
 
 ---
 
@@ -50,7 +50,7 @@ Problem → Data → Data Quality → SQL / EDA → Feature Engineering → Base
 | Parameter | Verified Project Fact |
 | :--- | :--- |
 | **Location** | Astana, Kazakhstan public bus network |
-| **Observation Period** | July 1, 2024 – September 30, 2024 (55 active operating dates) |
+| **Observation Period** | July 29, 2024 – September 21, 2024 (55 active operating dates) |
 | **Monitored Routes** | 3 trunk routes: Route 10, Route 12, Route 46 |
 | **Corridor Dimensions** | 2 directions, 201 unique physical stops, 300 physical corridor segments |
 | **Operational Telemetry** | 785,976 segment records across 19,769 vehicle trips |
@@ -67,7 +67,7 @@ Problem → Data → Data Quality → SQL / EDA → Feature Engineering → Base
 | **Model Test Metrics** | MAE: 189.54s (3.16 min) \| RMSE: 332.22s (5.54 min) \| $R^2$: 0.9290 |
 | **Model Performance Delta** | MAE: -12.94s (-6.39%) \| RMSE: -26.76s (-7.45%) \| $R^2$: +0.0119 |
 | **Top Predictive Feature** | `segments_traversed` (81.59% of permutation feature importance) |
-| **Directional Asymmetry** | Route 12: 21.0 min (Dir 1) vs 17.5 min (Dir 2) — 3.5 min / 20.0% differential |
+| **Directional Asymmetry** | Direction 2 longer across all routes by 1.34–2.36 min (Route 12: 21.97 min Dir 2 vs 20.63 min Dir 1 — 1.34 min differential) |
 | **High-Variability Segments** | 62 corridor segments identified ($N \ge 500, \text{IQR} \ge 68\text{s}$) |
 | **Passenger Dwell Dwell** | Standard stops median dwell: 22.0–27.0s (20–23% of total segment time) |
 
@@ -113,7 +113,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
 ### D. Resume / CV Bullet Points
 - **Engineered an end-to-end transit analytics pipeline** analyzing 785K+ GPS segment records and 15.2M journey observations across Astana’s bus network using Python, DuckDB, and Scikit-Learn.
 - **Audited and cleansed complex AVL/GTFS telemetry**, designing methodological solutions for terminal dispatch layovers and isolating sensor anomalies under strict data governance standards.
-- **Built an analytical SQL/EDA layer** uncovering operational insights, including a 20.0% directional travel-time asymmetry on Route 12 and 62 high-variability corridor segments ($\text{IQR} \ge 68\text{s}$).
+- **Built an analytical SQL/EDA layer** uncovering operational insights, including a 1.34-minute directional travel-time differential on Route 12 and 62 high-variability corridor segments ($\text{IQR} \ge 68\text{s}$).
 - **Developed a pre-journey regression model** (`HistGradientBoostingRegressor`) utilizing 10 zero-leakage features, achieving an MAE of 3.16 minutes and reducing prediction error by 6.39% over a strong historical baseline on 2.28M test samples.
 - **Designed a dual-persona Streamlit web application** providing riders with pre-journey travel-time estimates and operators with interactive corridor performance dashboards.
 
@@ -127,7 +127,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
 | **2** | **Passenger Route & Stop Selectors** | Cascading dropdowns (Route 10, Direction 1, Boarding stop Seg #2, Downstream destination). | Demonstrates dependency logic and Segment 1 exclusion. | *Figure 2: Dependent stop selection with Segment 1 terminal dispatch exclusion.* |
 | **3** | **Passenger Prediction Results** | Travel-time card (e.g. 18.4 min), Model Test Error (MAE 3.2 min), Historical Median delta, hop count. | Shows model inference, baseline comparison, and clear error metrics. | *Figure 3: Pre-journey travel-time estimation with historical baseline comparison.* |
 | **4** | **Operator Route Overview** | Network summary cards and comparison table across Routes 10, 12, and 46. | Provides macro-level transit corridor operational metrics. | *Figure 4: Corridor-level performance overview and summary statistics.* |
-| **5** | **Directional Asymmetry Chart** | Bar chart comparing Outbound vs Inbound journey times (highlighting Route 12's 3.5 min spread). | Visualizes structural transit imbalance between travel directions. | *Figure 5: Directional travel-time asymmetry across monitored trunk routes.* |
+| **5** | **Directional Asymmetry Chart** | Bar chart comparing Outbound vs Inbound journey times (highlighting Route 12's 1.34 min spread and Direction 2 longer across all corridors). | Visualizes structural transit imbalance between travel directions. | *Figure 5: Directional travel-time asymmetry across monitored trunk routes.* |
 | **6** | **High-Variability Segments Table** | Filterable table showing the 62 segments with IQR $\ge 68\text{s}$, sample sizes, and CV. | Demonstrates actionable insights for transit dispatchers. | *Figure 6: Granular corridor segment variability inventory ($N \ge 500, \text{IQR} \ge 68\text{s}$).* |
 | **7** | **ML Benchmark & Feature Importance** | Validation benchmark table, test evaluation metrics, and permutation importance bar chart. | Validates ML methodology, baseline comparison, and model interpretability. | *Figure 7: Out-of-time test set evaluation and permutation feature importance.* |
 
@@ -146,7 +146,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
   - *Core Message:* Passenger estimator provides pre-journey expectations; Operator dashboard delivers corridor diagnostics.
 - **Slide 4: Network & Data Scope**
   - *Title:* Astana Public Bus Telemetry
-  - *Core Message:* 3 trunk routes, 201 stops, 300 segments, 19,769 trips, 785K segment records, July–September 2024.
+  - *Core Message:* 3 trunk routes, 201 stops, 300 segments, 19,769 trips, 785K segment records, July 29 – September 21, 2024.
 - **Slide 5: Data Quality & Governance**
   - *Title:* Data Quality: Beyond Clean Data to Operational Understanding
   - *Core Message:* Audited 0 missing/duplicates; isolated terminal dispatch (Segment 1) and September 3–4 collection outage.
@@ -155,7 +155,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
   - *Core Message:* Built stop-to-stop journey pairs from vehicle trajectory runs; defined target as `observed_journey_time_seconds`.
 - **Slide 7: Directional Asymmetry Analysis**
   - *Title:* Corridor Findings: Directional Asymmetry
-  - *Core Message:* Route 12 displays a 3.5 min (20.0%) directional difference (21.0 min Outbound vs 17.5 min Inbound).
+  - *Core Message:* Direction 2 is longer across all three routes by 1.34 to 2.36 min (Route 12: 21.97 min Inbound vs 20.63 min Outbound — 1.34 min / 80.0s differential).
 - **Slide 8: Segment Variability Hotspots**
   - *Title:* Pinpointing 62 High-Variability Corridor Segments
   - *Core Message:* Empirically identified segments with $\text{IQR} \ge 68\text{s}$ ($N \ge 500$) where segment times fluctuate substantially.
@@ -201,7 +201,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
 - **Avoid:** Do not introduce live vehicle dispatching or passenger ticketing.
 
 ### Slide 4: Network & Data Scope (45s)
-> *"Our dataset covers the public bus network in Astana across three major trunk corridors: Route 10, Route 12, and Route 46, observed between July 1 and September 30, 2024. The network consists of 201 physical stops and 300 corridor segments. In total, we analyzed 785,976 segment records across 19,769 completed bus trips over 55 active dates, which we then synthesized into 15.28 million stop-to-stop journey observations. It is important to emphasize that this is a historical dataset of observed timestamps, not a live streaming feed."*
+> *"Our dataset covers the public bus network in Astana across three major trunk corridors: Route 10, Route 12, and Route 46, observed between July 29 and September 21, 2024. The network consists of 201 physical stops and 300 corridor segments. In total, we analyzed 785,976 segment records across 19,769 completed bus trips over 55 active dates, which we then synthesized into 15.28 million stop-to-stop journey observations. It is important to emphasize that this is a historical dataset of observed timestamps, not a live streaming feed."*
 - **Terms:** Trunk routes, corridor segments, observation volume.
 - **Avoid:** Do not call journey observations 'passengers'.
 
@@ -216,7 +216,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
 - **Avoid:** Do not include run times or dwell times as features—that would be data leakage.
 
 ### Slide 7: Directional Asymmetry Analysis (60s)
-> *"Using our SQL and EDA layer, one of our most striking operational findings was directional travel-time asymmetry. On Route 12, buses traveling Outbound (Direction 1) have a median journey time of 21.0 minutes, compared to 17.5 minutes Inbound (Direction 2)—a statistically significant difference of 3.5 minutes, or 20.0%. In contrast, Route 10 showed tight directional parity, at 20.3 versus 19.9 minutes. This demonstrates that transit reliability is corridor- and direction-specific, influenced by physical road geometry and stop spacing."*
+> *"Using our SQL and EDA layer, one of our most striking operational findings was directional travel-time asymmetry. Across all three monitored routes, Direction 2 exhibits longer median journey durations than Direction 1, ranging from 1.34 to 2.36 minutes longer. Specifically on Route 12, Direction 2 (Inbound) has a median journey duration of 21.97 minutes compared to 20.63 minutes for Direction 1 (Outbound)—a 1.34-minute (80.0-second) differential. On Route 10, Direction 2 is 23.68 minutes versus 21.32 minutes (+2.36 minutes), and on Route 46, Direction 2 is 25.15 minutes versus 23.12 minutes (+2.03 minutes). This demonstrates that transit reliability is corridor- and direction-specific, influenced by physical road geometry and stop spacing."*
 - **Terms:** Directional Asymmetry, Median Journey Duration.
 - **Avoid:** Do not speculate that traffic congestion caused this; report the measured difference.
 
@@ -338,7 +338,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
 >
 > *I analyzed over 785,000 GPS segment records across three trunk routes and constructed 15.2 million stop-to-stop journey observations. Before jumping into machine learning, I conducted a deep data-quality audit where I discovered that terminal dispatch segments accumulated massive layover dwells of 8 to 9 minutes. I isolated terminal dispatch from passenger origins to avoid inflating travel estimates, and isolated an anomalous sensor outage on September 3rd and 4th.*
 >
-> *I then built an analytical SQL layer in DuckDB that uncovered a 20% directional travel-time asymmetry on Route 12 and mapped 62 high-variability corridor segments.*
+> *I then built an analytical SQL layer in DuckDB that uncovered a 1.34-minute directional travel-time differential on Route 12 (with Direction 2 longer across all corridors) and mapped 62 high-variability corridor segments.*
 >
 > *For prediction, I first established a historical median baseline, which was surprisingly strong at a 3.37-minute MAE and a 0.917 R-squared. I then trained a HistGradientBoosting model on 10 strictly pre-journey features under a chronological split. On 2.28 million out-of-time test records, the model achieved an MAE of 3.16 minutes—a 6.4% error reduction over the baseline.*
 >

@@ -43,7 +43,7 @@ def render_admin_login():
     with col_form:
         st.markdown("### Sign In")
 
-        login_tab, recovery_tab = st.tabs(["Credentials Sign-In", "Account Recovery"])
+        login_tab, recovery_tab = st.tabs(["Credentials Sign-In", "Account Recovery (Prototype / Future Capability)"])
 
         with login_tab:
             with st.form("admin_login_form"):
@@ -66,34 +66,27 @@ def render_admin_login():
             )
 
         with recovery_tab:
-            st.markdown("#### Admin Credential Recovery")
-            st.caption("Enter the designated system owner recovery email address to receive a secure reset token.")
+            st.markdown("#### Account Recovery (Prototype / Future Capability)")
+            st.caption(
+                "This prototype interface demonstrates the planned account recovery workflow. "
+                "In a production deployment, this workflow connects to an enterprise SMTP service or identity provider "
+                "configured via `BUSINSIGHT_ADMIN_RECOVERY_EMAIL` to dispatch secure password reset links. "
+                "Actual email dispatch is not active in this offline demonstration prototype."
+            )
 
             with st.form("admin_recovery_form"):
-                email_input = st.text_input("Designated Administrator Email", placeholder="admin@businsight.transit")
-                recovery_submit = st.form_submit_button("Send One-Time Recovery Token", use_container_width=True)
+                email_input = st.text_input("Registered Administrator Email", placeholder="Enter registered administrator email")
+                recovery_submit = st.form_submit_button("Verify Recovery Configuration", use_container_width=True)
 
                 if recovery_submit:
                     if email_input.strip().lower() == ADMIN_RECOVERY_EMAIL.lower():
-                        st.session_state["admin_recovery_token_sent"] = True
-                        st.session_state["admin_recovery_target"] = email_input.strip()
-                        st.success(f"Secure one-time recovery token dispatched to `{email_input.strip()}`.")
+                        st.info(
+                            "**Configuration Verified:** The provided email matches the registered system administrator address. "
+                            "In a connected production environment, a secure password-reset link would be dispatched via SMTP. "
+                            "(Email dispatch is not active in this offline prototype; please authenticate using administrator credentials on the sign-in tab)."
+                        )
                     else:
-                        st.error("Recovery error: Provided email does not match registered system owner records.")
-
-            if st.session_state.get("admin_recovery_token_sent", False):
-                st.markdown("""
-                    <div style="background-color: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 12px 14px; margin-top: 10px; font-size: 0.85rem; color: #166534;">
-                        <strong>Prototype Recovery Dispatch:</strong><br>
-                        A single-use cryptographic reset token (<code>BI-SEC-8492-EXP</code>) has been logged to the secure dispatch queue.
-                        In this evaluation prototype, you may use temporary emergency bypass or sign in with administrator credentials.
-                    </div>
-                """, unsafe_allow_html=True)
-
-                if st.button("Authorize Temporary Session via One-Time Token", key="btn_token_auth"):
-                    st.session_state["admin_auth"] = True
-                    st.session_state["admin_username"] = "admin (recovery-session)"
-                    st.rerun()
+                        st.error("Verification error: Provided email address does not match registered system administrator records.")
 
     with col_info:
         st.markdown("### Access Control & Governance")
@@ -168,7 +161,7 @@ def render_authenticated_admin():
             prov_submit = st.form_submit_button("Provision Operator Account (Prototype Simulation)")
             if prov_submit:
                 if new_username:
-                    st.success(f"Prototype Account '{new_username}' provisioned with role '{new_role}'. Invitation token queued.")
+                    st.success(f"Prototype Account '{new_username}' provisioned with role '{new_role}'. Account recorded in prototype session configuration.")
                 else:
                     st.warning("Please provide a username to provision.")
 

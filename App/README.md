@@ -63,7 +63,7 @@ App/
 
 ### 📊 Transit Operations Dashboard (`operator_view.py`)
 - **Route Overview:** High-level network KPIs and comparative metrics across Routes 10, 12, and 46.
-- **Directional Asymmetry:** Highlights structural imbalances between Outbound (Direction 1) and Inbound (Direction 2) corridors, notably Route 12's 3.5 min (20.0%) directional difference.
+- **Directional Asymmetry:** Highlights structural imbalances between Outbound (Direction 1) and Inbound (Direction 2) corridors, notably Route 12's 1.34 min (80.0s) directional differential (21.97 min vs 20.63 min).
 - **Segment Variability:** Direct filterable inventory of the **62 high-variability corridor segments** ($N \ge 500$, $\text{IQR} \ge 68\text{s}$) identified during Task 4.
 - **Dwell Dynamics:** Empirical contrast between Terminal Dispatch (Segment 1: substantial layover buffering with median dwell 506–546s on outbound routes) and Standard Passenger Stops (Segments $\ge 2$: routine boarding/alighting with median dwell 22–27s).
 - **Hop-Tier Trends & Day-of-Week:** Shows that journey duration increases with hop length in the observed data, along with operational stability across Monday–Sunday schedules.

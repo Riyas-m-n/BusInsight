@@ -122,7 +122,7 @@ def render_methodology_view():
                 * **Controlled Journey Reconstruction:** Generation of 15.28M stop-to-stop journey pairs under Segment 1 layover exclusion.
                 * **Strict Pre-Journey ML Pipeline:** HistGradientBoosting (L2) trained on 14.48M rows, achieving 3.16 min MAE and 0.9290 R².
                 * **Corridor Variability Identification:** 62 High-Variability corridor segments cataloged with IQR &ge; 68s.
-                * **Directional Asymmetry Quantification:** Route 12's 20% directional travel-time spread empirically characterized.
+                * **Directional Asymmetry Quantification:** Empirical characterization showing Direction 2 longer than Direction 1 across all 3 routes (Route 12 differential: 1.34 min / 80.0s).
                 * **Dual-Persona Interface:** Streamlit web application providing Passenger planning and Operator corridor intelligence.
             """)
 
