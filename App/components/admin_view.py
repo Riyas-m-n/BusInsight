@@ -10,7 +10,6 @@ import streamlit as st
 # Secure credentials resolved from environment/deployment configuration
 ADMIN_USER = os.environ.get("BUSINSIGHT_ADMIN_USER", "admin")
 ADMIN_PASSWORD = os.environ.get("BUSINSIGHT_ADMIN_PASSWORD", "astana_admin_2024")
-ADMIN_RECOVERY_EMAIL = os.environ.get("BUSINSIGHT_ADMIN_RECOVERY_EMAIL", "admin@businsight.transit")
 
 
 def render_admin_view():
@@ -25,7 +24,7 @@ def render_admin_view():
 
 
 def render_admin_login():
-    """Renders the secure administrator authentication form and recovery flow."""
+    """Renders the secure administrator authentication form."""
     st.markdown("""
         <div style="margin-bottom: 24px;">
             <div style="display: inline-flex; align-items: center; gap: 6px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; padding: 3px 12px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; margin-bottom: 8px;">
@@ -41,52 +40,26 @@ def render_admin_login():
     col_form, col_info = st.columns([1.2, 1], gap="large")
 
     with col_form:
-        st.markdown("### Sign In")
+        st.markdown("### Sign In to Administrator Workspace")
 
-        login_tab, recovery_tab = st.tabs(["Credentials Sign-In", "Account Recovery (Prototype / Future Capability)"])
+        with st.form("admin_login_form"):
+            user_input = st.text_input("Administrator Username", key="admin_user_input")
+            pass_input = st.text_input("Password", type="password", key="admin_pass_input")
+            submit = st.form_submit_button("Authenticate as Administrator", type="primary", use_container_width=True)
 
-        with login_tab:
-            with st.form("admin_login_form"):
-                user_input = st.text_input("Username", key="admin_user_input")
-                pass_input = st.text_input("Password", type="password", key="admin_pass_input")
-                submit = st.form_submit_button("Authenticate as Administrator", type="primary", use_container_width=True)
+            if submit:
+                if user_input.strip() == ADMIN_USER and pass_input == ADMIN_PASSWORD:
+                    st.session_state["admin_auth"] = True
+                    st.session_state["admin_username"] = user_input.strip()
+                    st.success("Authentication successful! Loading administrator workspace...")
+                    st.rerun()
+                else:
+                    st.error("Authentication failed: Invalid administrator credentials.")
 
-                if submit:
-                    if user_input.strip() == ADMIN_USER and pass_input == ADMIN_PASSWORD:
-                        st.session_state["admin_auth"] = True
-                        st.session_state["admin_username"] = user_input.strip()
-                        st.success("Authentication successful! Loading administrator workspace...")
-                        st.rerun()
-                    else:
-                        st.error("Authentication failed: Invalid administrator credentials.")
-
-            st.caption(
-                "💡 **Prototype demo notice**: Default test credentials are configured via environment variables "
-                "(`BUSINSIGHT_ADMIN_USER` / `BUSINSIGHT_ADMIN_PASSWORD`)."
-            )
-
-        with recovery_tab:
-            st.markdown("#### Account Recovery (Prototype / Future Capability)")
-            st.caption(
-                "This prototype interface demonstrates the planned account recovery workflow. "
-                "In a production deployment, this workflow connects to an enterprise SMTP service or identity provider "
-                "configured via `BUSINSIGHT_ADMIN_RECOVERY_EMAIL` to dispatch secure password reset links. "
-                "Actual email dispatch is not active in this offline demonstration prototype."
-            )
-
-            with st.form("admin_recovery_form"):
-                email_input = st.text_input("Registered Administrator Email", placeholder="Enter registered administrator email")
-                recovery_submit = st.form_submit_button("Verify Recovery Configuration", use_container_width=True)
-
-                if recovery_submit:
-                    if email_input.strip().lower() == ADMIN_RECOVERY_EMAIL.lower():
-                        st.info(
-                            "**Configuration Verified:** The provided email matches the registered system administrator address. "
-                            "In a connected production environment, a secure password-reset link would be dispatched via SMTP. "
-                            "(Email dispatch is not active in this offline prototype; please authenticate using administrator credentials on the sign-in tab)."
-                        )
-                    else:
-                        st.error("Verification error: Provided email address does not match registered system administrator records.")
+        st.caption(
+            "💡 **Prototype demo notice**: Default test credentials are configured via environment variables "
+            "(`BUSINSIGHT_ADMIN_USER` / `BUSINSIGHT_ADMIN_PASSWORD`)."
+        )
 
     with col_info:
         st.markdown("### Access Control & Governance")
@@ -99,7 +72,7 @@ def render_admin_login():
                     <li><strong>Administrator:</strong> System owner access to operator user provisioning, pipeline integrity, and platform configuration.</li>
                 </ul>
                 <div style="font-weight: 700; color: #0F172A; margin-bottom: 6px;">Security Standard:</div>
-                <div>Credentials and recovery addresses are managed through environment secrets. Passwords are never stored in plaintext within source code.</div>
+                <div>System owner credentials are authenticated securely against environment secrets. Passwords are never stored in plaintext within source code. Account recovery workflows will be integrated via enterprise identity providers in a future production release.</div>
             </div>
         """, unsafe_allow_html=True)
 

@@ -112,7 +112,7 @@ BusInsight/
 
 ## 8. Limitations & Scope
 
-1. **Historical Telemetry:** Telemetry reflects July–September 2024 operating patterns and does not incorporate real-time GPS feeds or dynamic traffic conditions.
+1. **Historical Telemetry:** Telemetry reflects July 29 – September 21, 2024 operating patterns and does not incorporate real-time GPS feeds or dynamic traffic conditions.
 2. **No Ridership Counters:** Observation counts ($N = 15.28\text{M}$) represent mathematically generated stop-to-stop vehicle trajectory observations, not ticketed passenger counts.
 3. **No Unmeasured Causal Claims:** High travel-time variability is reported empirically without asserting unmeasured causes such as traffic congestion or driver behavior.
 

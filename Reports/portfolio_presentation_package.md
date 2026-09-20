@@ -13,7 +13,7 @@ Problem → Data → Data Quality → SQL / EDA → Feature Engineering → Base
 ```
 
 - **Problem:** Public transit riders experience travel-time uncertainty when planning journeys across urban bus corridors, while transit authorities often lack granular, segment-level variability metrics to target operational improvements.
-- **Data:** Utilized GPS-derived automated vehicle location (AVL) stop events and static GTFS feeds from the public bus network in Astana, Kazakhstan across 3 high-volume trunk routes (Routes 10, 12, 46), covering 201 stops, 300 corridor segments, 19,769 vehicle trips, and 55 active dates (July–September 2024).
+- **Data:** Utilized GPS-derived automated vehicle location (AVL) stop events and static GTFS feeds from the public bus network in Astana, Kazakhstan across 3 high-volume trunk routes (Routes 10, 12, 46), covering 201 stops, 300 corridor segments, 19,769 vehicle trips, and 55 active dates (July 29 – September 21, 2024).
 - **Data Quality:** Conducted a comprehensive audit resolving zero-duration records, validating stop continuity, isolating an anomalous data collection drop on September 3–4, and uncovering that initial terminal dispatch (Segment 1) incorporates substantial layovers and buffer holding rather than ordinary passenger travel.
 - **SQL / EDA:** Deployed a lightweight, view-backed DuckDB analytical catalog to compute route-level distributions, directional asymmetry, dwell behaviors, hop-length scaling, and to identify 62 High-Variability corridor segments ($N \ge 500, \text{IQR} \ge 68\text{s}$).
 - **Feature Engineering:** Constructed 15,277,204 stop-to-stop journey observations. Formulated 10 strictly pre-journey features (route, direction, origin/destination stop IDs, segment positions, hop count, day of week, weekend, month) with zero post-journey data leakage.
@@ -251,7 +251,7 @@ A core product takeaway from BusInsight is understanding the cost-benefit trade-
 - **Avoid:** Do not claim features 'caused' delays.
 
 ### Slide 14: Application Demonstration (60s)
-> *"We brought this research into a working prototype using Streamlit. On the Passenger view, users select a route, direction, origin, destination, and date. The app queries our serialized model in under 5 milliseconds and displays the predicted duration alongside the historical baseline median and test MAE. On the Operator view, analysts can inspect network KPIs, explore directional asymmetry, and filter the 62 high-variability segments. The app is lightweight, caching summaries in memory without loading the full 1.7 GB training CSV."*
+> *"We brought this research into a working prototype using Streamlit. On the Passenger view, users select a route, direction, origin, destination, and date. The app queries our serialized model with fast local inference and displays the predicted duration alongside the historical baseline median and test MAE. On the Operator view, analysts can inspect network KPIs, explore directional asymmetry, and filter the 62 high-variability segments. The app is lightweight, caching summaries in memory without loading the full 1.7 GB training CSV."*
 - **Terms:** Streamlit, Service Architecture, In-Memory Caching.
 - **Avoid:** Do not claim the app connects to live city bus APIs.
 
