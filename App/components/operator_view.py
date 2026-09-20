@@ -17,8 +17,20 @@ from ..services.analytics_service import (
     load_day_summary,
 )
 
-OPERATOR_USER = os.environ.get("BUSINSIGHT_OPERATOR_USER", "operator")
-OPERATOR_PASSWORD = os.environ.get("BUSINSIGHT_OPERATOR_PASSWORD", "transit2024")
+def get_operator_accounts():
+    """Retrieve configured operator accounts from environment."""
+    accounts = {}
+    for i in ["01", "02", "03"]:
+        u = os.environ.get(f"BUSINSIGHT_OPERATOR_{i}_USER")
+        p = os.environ.get(f"BUSINSIGHT_OPERATOR_{i}_PASSWORD")
+        if u and p:
+            accounts[u.strip()] = p
+    # Fallback to legacy single operator env if set
+    legacy_u = os.environ.get("BUSINSIGHT_OPERATOR_USER")
+    legacy_p = os.environ.get("BUSINSIGHT_OPERATOR_PASSWORD")
+    if legacy_u and legacy_p and legacy_u.strip() not in accounts:
+        accounts[legacy_u.strip()] = legacy_p
+    return accounts
 
 
 def render_operator_view():
@@ -55,17 +67,19 @@ def render_operator_login():
             submit = st.form_submit_button("Authenticate & Open Dashboard", type="primary", use_container_width=True)
 
             if submit:
-                if user_input.strip() == OPERATOR_USER and pass_input == OPERATOR_PASSWORD:
+                accounts = get_operator_accounts()
+                clean_user = user_input.strip()
+                if clean_user in accounts and accounts[clean_user] and pass_input == accounts[clean_user]:
                     st.session_state["operator_auth"] = True
-                    st.session_state["operator_username"] = user_input.strip()
+                    st.session_state["operator_username"] = clean_user
                     st.success("Authentication successful! Loading operations workspace...")
                     st.rerun()
                 else:
                     st.error("Authentication failed: Invalid operator credentials.")
 
         st.caption(
-            "💡 **Prototype demo notice**: Default analyst credentials are configured via environment variables "
-            "(`BUSINSIGHT_OPERATOR_USER` / `BUSINSIGHT_OPERATOR_PASSWORD`)."
+            "💡 **Prototype demo notice**: Operator accounts are configured via environment secrets "
+            "(`BUSINSIGHT_OPERATOR_01_USER` through `03`)."
         )
 
     with col_info:

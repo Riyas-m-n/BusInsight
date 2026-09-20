@@ -22,10 +22,18 @@ html, body, [class*="css"] {
 }
 
 /* Compact Main Container Padding to fit desktop viewport */
+header[data-testid="stHeader"] {
+    height: 2rem !important;
+    min-height: 2rem !important;
+    background: transparent !important;
+}
+
+div[data-testid="stMainBlockContainer"],
+.main .block-container,
 .block-container {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-    max-width: 1100px !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 1rem !important;
+    max-width: 1120px !important;
 }
 
 /* Top App Header Container */
@@ -140,7 +148,9 @@ html, body, [class*="css"] {
 div.stButton > button {
     border-radius: 8px;
     font-weight: 600;
-    padding: 0.5rem 1rem;
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.85rem !important;
+    min-height: 2.25rem !important;
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 

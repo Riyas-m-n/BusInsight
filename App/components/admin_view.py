@@ -7,9 +7,11 @@ access control, platform status, and future capability management.
 import os
 import streamlit as st
 
-# Secure credentials resolved from environment/deployment configuration
-ADMIN_USER = os.environ.get("BUSINSIGHT_ADMIN_USER", "admin")
-ADMIN_PASSWORD = os.environ.get("BUSINSIGHT_ADMIN_PASSWORD", "astana_admin_2024")
+def get_admin_credentials():
+    """Retrieve administrator credentials from environment."""
+    user = os.environ.get("BUSINSIGHT_ADMIN_USER", "businsight_admin")
+    pwd = os.environ.get("BUSINSIGHT_ADMIN_PASSWORD", "")
+    return user.strip(), pwd
 
 
 def render_admin_view():
@@ -48,7 +50,8 @@ def render_admin_login():
             submit = st.form_submit_button("Authenticate as Administrator", type="primary", use_container_width=True)
 
             if submit:
-                if user_input.strip() == ADMIN_USER and pass_input == ADMIN_PASSWORD:
+                admin_user, admin_password = get_admin_credentials()
+                if user_input.strip() == admin_user and pass_input == admin_password and admin_password:
                     st.session_state["admin_auth"] = True
                     st.session_state["admin_username"] = user_input.strip()
                     st.success("Authentication successful! Loading administrator workspace...")
@@ -57,7 +60,7 @@ def render_admin_login():
                     st.error("Authentication failed: Invalid administrator credentials.")
 
         st.caption(
-            "💡 **Prototype demo notice**: Default test credentials are configured via environment variables "
+            "💡 **Prototype demo notice**: Administrator account is configured via environment secrets "
             "(`BUSINSIGHT_ADMIN_USER` / `BUSINSIGHT_ADMIN_PASSWORD`)."
         )
 
@@ -112,11 +115,14 @@ def render_authenticated_admin():
         st.markdown("### Authorized Operator Accounts")
         st.caption("Configure and manage analyst accounts permitted to access the protected Operations area.")
 
+        op1 = os.environ.get("BUSINSIGHT_OPERATOR_01_USER", "businsight_operator_01")
+        op2 = os.environ.get("BUSINSIGHT_OPERATOR_02_USER", "businsight_operator_02")
+        op3 = os.environ.get("BUSINSIGHT_OPERATOR_03_USER", "businsight_operator_03")
+
         operator_accounts = [
-            {"Username": "operator", "Role": "Lead Transit Analyst", "Assigned Corridors": "Routes 10, 12, 46", "Status": "Active", "Created": "2024-09-01"},
-            {"Username": "analyst_corridors", "Role": "Corridor Performance Analyst", "Assigned Corridors": "Route 10 & 12 (Airport Express)", "Status": "Active", "Created": "2024-09-10"},
-            {"Username": "dispatcher_ops", "Role": "Terminal Dispatch Controller", "Assigned Corridors": "All Routes (Layover Monitoring)", "Status": "Active", "Created": "2024-09-15"},
-            {"Username": "auditor_guest", "Role": "External Academic Auditor", "Assigned Corridors": "Read-Only (All)", "Status": "Pending Review", "Created": "2024-09-20"},
+            {"Username": op1, "Role": "Lead Transit Analyst", "Assigned Corridors": "Routes 10, 12, 46", "Status": "Active", "Auth Source": ".env (Configured)"},
+            {"Username": op2, "Role": "Corridor Performance Analyst", "Assigned Corridors": "Routes 10 & 12 (Airport Express)", "Status": "Active", "Auth Source": ".env (Configured)"},
+            {"Username": op3, "Role": "Terminal Dispatch Analyst", "Assigned Corridors": "Route 46 & Layover Terminals", "Status": "Active", "Auth Source": ".env (Configured)"},
         ]
 
         st.dataframe(operator_accounts, use_container_width=True, hide_index=True)

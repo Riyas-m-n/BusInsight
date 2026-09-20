@@ -20,6 +20,23 @@ if str(PROJECT_ROOT) not in sys.path:
 if str(APP_DIR) not in sys.path:
     sys.path.insert(0, str(APP_DIR))
 
+# Load local .env secrets if present without external dependencies
+def load_local_env():
+    import os
+    env_file = PROJECT_ROOT / ".env"
+    if env_file.exists():
+        with open(env_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    k = k.strip()
+                    v = v.strip().strip("'\"")
+                    if k and k not in os.environ:
+                        os.environ[k] = v
+
+load_local_env()
+
 from App.components.landing_view import render_landing_view
 from App.components.passenger_view import render_passenger_view
 from App.components.operator_view import render_operator_view
