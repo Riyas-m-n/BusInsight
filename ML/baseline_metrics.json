@@ -1,0 +1,20 @@
+{
+  "validation": {
+    "n_observations": 2269507,
+    "mae_seconds": 191.91,
+    "mae_minutes": 3.2,
+    "rmse_seconds": 325.23,
+    "rmse_minutes": 5.42,
+    "r2_score": 0.9305,
+    "fallback_count": 34
+  },
+  "test": {
+    "n_observations": 2281911,
+    "mae_seconds": 202.48,
+    "mae_minutes": 3.37,
+    "rmse_seconds": 358.98,
+    "rmse_minutes": 5.98,
+    "r2_score": 0.9171,
+    "fallback_count": 19
+  }
+}

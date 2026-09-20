@@ -1,0 +1,28 @@
+{
+  "selected_model": "HistGradientBoosting (Squared Error)",
+  "library_versions": {
+    "scikit-learn": "1.2.1",
+    "numpy": "1.23.5",
+    "pandas": "1.5.3",
+    "joblib": "1.1.1"
+  },
+  "feature_columns": [
+    "route_short_name",
+    "direction_id",
+    "start_stop_idx",
+    "dest_stop_idx",
+    "start_segment",
+    "destination_segment",
+    "segments_traversed",
+    "day_of_week",
+    "is_weekend",
+    "month"
+  ],
+  "row_counts": {
+    "train": 9926268,
+    "val": 2269507,
+    "test": 2281911,
+    "total": 14477686
+  },
+  "training_completed_at": "2026-09-20 16:26:17"
+}

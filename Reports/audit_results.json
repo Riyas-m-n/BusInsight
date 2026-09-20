@@ -1,0 +1,325 @@
+{
+  "metadata": {
+    "generated_at": "2026-09-20T13:27:09.215425",
+    "project": "BusInsight",
+    "task": "Task 1 - Data Audit, Integrity Validation & Relational Ingestion",
+    "raw_file_counts": {
+      "agency.txt": 1,
+      "calendar_dates.txt": 55,
+      "routes.txt": 3,
+      "stops.txt": 201,
+      "trips.txt": 19769,
+      "stop_times.txt": 785976,
+      "segment_level_data.csv": 785976
+    }
+  },
+  "relational_integrity": {
+    "segment_to_trip": {
+      "total_segment_records": 785976,
+      "unique_segment_trips": 19769,
+      "unique_trips_in_trips_txt": 19769,
+      "unmatched_segment_trips": 0,
+      "trips_without_segments": 0,
+      "match_rate_pct": 100.0
+    },
+    "trip_to_route": {
+      "unique_routes_in_trips": 3,
+      "unique_routes_in_routes_txt": 3,
+      "unmatched_trip_routes": 0,
+      "routes_without_trips": 0,
+      "match_rate_pct": 100.0
+    },
+    "segment_to_stop": {
+      "unique_start_guids": 200,
+      "unique_end_guids": 201,
+      "total_unique_segment_stops": 201,
+      "total_stops_in_stops_txt": 201,
+      "unmatched_start_guids": 0,
+      "unmatched_end_guids": 0,
+      "stops_without_segments": 0,
+      "match_rate_pct": 100.0
+    },
+    "trip_to_calendar": {
+      "unique_trip_services": 55,
+      "unique_calendar_services": 55,
+      "unmatched_trip_services": 0,
+      "match_rate_pct": 100.0
+    },
+    "trips_per_route": {
+      "46": 8139,
+      "10": 6480,
+      "12": 5150
+    },
+    "segments_per_route": {
+      "46": 335078,
+      "10": 243243,
+      "12": 207655
+    },
+    "stop_times_trip_count_mismatch": 0
+  },
+  "segment_audit": {
+    "total_rows": 785976,
+    "unique_trips": 19769,
+    "unique_dates": 55,
+    "date_range": {
+      "min": "2024-07-29",
+      "max": "2024-09-21"
+    },
+    "unique_devices": 148,
+    "segments_range": {
+      "min": 1,
+      "max": 56,
+      "unique_count": 56
+    },
+    "direction_counts": {
+      "2": 395412,
+      "1": 390564
+    },
+    "self_loops": 0,
+    "missing_values": {
+      "date": 0,
+      "deviceid": 0,
+      "direction": 0,
+      "segment": 0,
+      "start_point": 0,
+      "end_point": 0,
+      "start_time": 0,
+      "run_time_in_seconds": 0,
+      "dwell_time_in_seconds": 0,
+      "arrival_time": 0,
+      "departure_time": 0,
+      "trip_id": 0,
+      "device_guid": 0,
+      "start_guid": 0,
+      "end_guid": 0
+    },
+    "total_missing": 0,
+    "exact_duplicates": 0,
+    "trip_segment_duplicates": 0,
+    "timestamp_audit": {
+      "start_parse_errors": 0,
+      "arrival_parse_errors": 0,
+      "departure_parse_errors": 0,
+      "arrival_before_start": 0,
+      "departure_before_arrival": 0
+    },
+    "anomaly_counts": {
+      "runtime_zero": 925,
+      "runtime_negative": 0,
+      "dwell_zero": 46436,
+      "dwell_negative": 0,
+      "total_time_zero": 475,
+      "total_time_negative": 0
+    },
+    "connectivity_audit": {
+      "total_trips": 19769,
+      "trips_not_starting_at_1": 707,
+      "trips_not_starting_at_1_pct": 3.58,
+      "trips_with_gaps": 2640,
+      "trips_with_gaps_pct": 13.35,
+      "consecutive_transitions_checked": 762912,
+      "consecutive_stop_mismatches": 0,
+      "gap_transitions_observed": 3295
+    },
+    "origin_terminal_layover_finding": {
+      "segment_1_total_records": 19062,
+      "segment_1_runtime_equals_dwell_count": 19062,
+      "segment_1_runtime_equals_dwell_pct": 100.0,
+      "dwell_over_600s_total": 4778,
+      "dwell_over_600s_on_first_segment": 4685,
+      "dwell_over_600s_on_first_segment_pct": 98.05,
+      "dwell_over_600s_on_last_segment": 51,
+      "dwell_over_600s_on_intermediate": 42
+    }
+  },
+  "distributions": {
+    "statistics": {
+      "run_time_in_seconds": {
+        "count": 785976,
+        "mean": 105.6,
+        "std": 188.43,
+        "min": 0.0,
+        "q25": 42.0,
+        "median": 70.0,
+        "q75": 113.0,
+        "iqr": 71.0,
+        "max": 19140.0,
+        "skewness": 14.15,
+        "kurtosis": 560.58,
+        "quantiles": {
+          "q_1": 7.0,
+          "q_5": 20.0,
+          "q_10": 28.0,
+          "q_25": 42.0,
+          "q_50": 70.0,
+          "q_75": 113.0,
+          "q_90": 183.0,
+          "q_95": 267.0,
+          "q_99": 645.0,
+          "q_999": 2525.03,
+          "q_100": 19140.0
+        }
+      },
+      "dwell_time_in_seconds": {
+        "count": 785976,
+        "mean": 37.92,
+        "std": 156.45,
+        "min": 0.0,
+        "q25": 15.0,
+        "median": 24.0,
+        "q75": 34.0,
+        "iqr": 19.0,
+        "max": 19140.0,
+        "skewness": 20.86,
+        "kurtosis": 1096.77,
+        "quantiles": {
+          "q_1": 0.0,
+          "q_5": 0.0,
+          "q_10": 3.0,
+          "q_25": 15.0,
+          "q_50": 24.0,
+          "q_75": 34.0,
+          "q_90": 47.0,
+          "q_95": 61.0,
+          "q_99": 209.0,
+          "q_999": 2460.05,
+          "q_100": 19140.0
+        }
+      },
+      "total_segment_time": {
+        "count": 785976,
+        "mean": 143.52,
+        "std": 326.47,
+        "min": 0.0,
+        "q25": 65.0,
+        "median": 97.0,
+        "q75": 143.0,
+        "iqr": 78.0,
+        "max": 38280.0,
+        "skewness": 18.32,
+        "kurtosis": 915.57,
+        "quantiles": {
+          "q_1": 17.0,
+          "q_5": 33.0,
+          "q_10": 45.0,
+          "q_25": 65.0,
+          "q_50": 97.0,
+          "q_75": 143.0,
+          "q_90": 217.0,
+          "q_95": 304.0,
+          "q_99": 794.0,
+          "q_999": 4932.0,
+          "q_100": 38280.0
+        }
+      }
+    },
+    "threshold_outliers": {
+      "run_time_in_seconds": {
+        "gt_300s": {
+          "count": 30879,
+          "pct": 3.929
+        },
+        "gt_600s": {
+          "count": 8763,
+          "pct": 1.115
+        },
+        "gt_900s": {
+          "count": 5399,
+          "pct": 0.687
+        },
+        "gt_1800s": {
+          "count": 3158,
+          "pct": 0.402
+        },
+        "gt_3600s": {
+          "count": 105,
+          "pct": 0.013
+        }
+      },
+      "dwell_time_in_seconds": {
+        "gt_60s": {
+          "count": 40080,
+          "pct": 5.099
+        },
+        "gt_120s": {
+          "count": 11618,
+          "pct": 1.478
+        },
+        "gt_300s": {
+          "count": 6524,
+          "pct": 0.83
+        },
+        "gt_600s": {
+          "count": 4778,
+          "pct": 0.608
+        },
+        "gt_1800s": {
+          "count": 2719,
+          "pct": 0.346
+        },
+        "gt_3600s": {
+          "count": 38,
+          "pct": 0.005
+        }
+      },
+      "total_segment_time": {
+        "gt_300s": {
+          "count": 40128,
+          "pct": 5.105
+        },
+        "gt_600s": {
+          "count": 11216,
+          "pct": 1.427
+        },
+        "gt_900s": {
+          "count": 6996,
+          "pct": 0.89
+        },
+        "gt_1800s": {
+          "count": 4363,
+          "pct": 0.555
+        },
+        "gt_3600s": {
+          "count": 2780,
+          "pct": 0.354
+        },
+        "gt_7200s": {
+          "count": 41,
+          "pct": 0.005
+        }
+      }
+    }
+  },
+  "proposed_cleaning_rules": [
+    {
+      "rule_id": "RULE-01",
+      "name": "Exclude zero/non-positive total travel time records",
+      "evidence": "475 records have run_time_in_seconds == 0 AND dwell_time_in_seconds == 0 (total_time == 0). A bus physically cannot traverse a segment in 0 seconds.",
+      "action": "Filter out records where total_segment_time <= 0."
+    },
+    {
+      "rule_id": "RULE-02",
+      "name": "Exclude or separate origin terminal records (segment == 1)",
+      "evidence": "All 19,062 segment 1 records have run_time_in_seconds == dwell_time_in_seconds. Furthermore, 98.05% of extreme dwell times (> 600s) occur on the first segment. These reflect terminal dispatch holding/layovers, not on-road travel time.",
+      "action": "Separate segment == 1 dispatch wait times from running segment journey estimations."
+    },
+    {
+      "rule_id": "RULE-03",
+      "name": "Cap/filter extreme operational outlier runtimes (> 1,800s / 30 mins)",
+      "evidence": "3,158 records (0.40%) exceed 1,800 seconds and 105 exceed 1 hour (max 19,140s / 5.3 hours). Segments are short urban intervals (~1 km). These represent breakdowns, sensor detachments, or GPS tracking suspended mid-route.",
+      "action": "Flag records with run_time > 1800s as abnormal/breakdown outliers for specialized operator analysis; exclude from standard passenger baseline models."
+    },
+    {
+      "rule_id": "RULE-04",
+      "name": "Chronological sorting and multi-index establishment",
+      "evidence": "The raw segment CSV is unsorted, scattering trips and segment sequences across the 154MB file.",
+      "action": "Sort datasets by trip_id, segment, and start_time to guarantee temporal ordering and enable sequential feature engineering."
+    },
+    {
+      "rule_id": "RULE-05",
+      "name": "Explicit route enrichment",
+      "evidence": "segment_level_data.csv does not contain route_id. Trips must be joined with trips.txt to access route_id and routes.txt to access route_short_name (10, 12, 46).",
+      "action": "Denormalize or index route_id and route_short_name into the analytical table/view."
+    }
+  ]
+}

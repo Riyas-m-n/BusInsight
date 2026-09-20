@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "script_name": "Scripts/data_cleaning.py",
+    "execution_timestamp_utc": "2026-09-20T08:04:19.930193+00:00",
+    "project": "BusInsight",
+    "task": "Task 2A - Clean Analytical Dataset Generation"
+  },
+  "source_files": {
+    "trips": "C:\\Project\\001\\BusInsight\\Original Data\\trips.txt",
+    "routes": "C:\\Project\\001\\BusInsight\\Original Data\\routes.txt",
+    "stops": "C:\\Project\\001\\BusInsight\\Original Data\\stops.txt",
+    "segment_level_data": "C:\\Project\\001\\BusInsight\\Original Data\\segment_level_data\\segment_level_data.csv"
+  },
+  "row_accounting": {
+    "source_rows": 785976,
+    "clean_rows": 785976,
+    "rows_physically_removed": 0,
+    "records_retained_pct": 100.0
+  },
+  "joins_performed": [
+    {
+      "join": "segment_level_data.trip_id -> trips.trip_id",
+      "columns_added": [
+        "route_id",
+        "service_id",
+        "direction_id",
+        "vehicle_id"
+      ],
+      "unmapped_records": 0
+    },
+    {
+      "join": "trips.route_id -> routes.route_id",
+      "columns_added": [
+        "agency_id",
+        "route_long_name",
+        "route_type",
+        "route_short_name"
+      ],
+      "unmapped_records": 0
+    }
+  ],
+  "columns_added": [
+    "route_id",
+    "service_id",
+    "direction_id",
+    "vehicle_id",
+    "agency_id",
+    "route_long_name",
+    "route_type",
+    "route_short_name",
+    "total_segment_time_seconds",
+    "terminal_dispatch_flag",
+    "zero_run_time_flag",
+    "zero_total_time_flag",
+    "run_time_over_10m_flag",
+    "run_time_over_30m_flag",
+    "run_time_over_1h_flag",
+    "extreme_travel_time_flag",
+    "segment_gap_after_flag",
+    "standard_travel_time_eligible"
+  ],
+  "flag_summary": {
+    "terminal_dispatch_flag": 19062,
+    "zero_run_time_flag": 925,
+    "zero_total_time_flag": 475,
+    "run_time_over_10m_flag": 8763,
+    "run_time_over_30m_flag": 3158,
+    "run_time_over_1h_flag": 105,
+    "extreme_travel_time_flag": 3158,
+    "segment_gap_after_flag": 3295,
+    "standard_travel_time_eligible": 765944,
+    "standard_travel_time_ineligible": 20032
+  },
+  "analytical_eligibility_rules": {
+    "definition": "standard_travel_time_eligible = 1 if (terminal_dispatch_flag == 0 AND zero_run_time_flag == 0 AND zero_total_time_flag == 0 AND extreme_travel_time_flag == 0), else 0",
+    "eligible_count": 765944,
+    "ineligible_count": 20032,
+    "reason_for_no_physical_deletion": "All observations preserved to support operator analysis and avoid irreversible data destruction."
+  }
+}

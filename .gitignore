@@ -1,0 +1,67 @@
+# ==============================================================================
+# BusInsight — Git Ignore Configuration
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Large Datasets (Multi-GB generated files & raw telemetry; source on Zenodo)
+# ------------------------------------------------------------------------------
+# Raw large GPS / GTFS telemetry files (>150 MB and >40 MB)
+Original Data/segment_level_data/
+Original Data/stop_times.txt
+Original Data/trips.txt
+
+# Generated intermediate & ML-ready datasets (>300 MB to 2.88 GB)
+Data/segment_level_clean.csv
+Data/analytical_segment_data.csv
+Data/journey_training_data.csv
+Data/journey_ml_ready.csv
+
+# ------------------------------------------------------------------------------
+# 2. Local Database & State Files
+# ------------------------------------------------------------------------------
+# Generated DuckDB database file (reproducible via Scripts/build_sql_database.py)
+SQL/*.duckdb
+SQL/*.duckdb.wal
+*.duckdb
+*.duckdb.wal
+
+# ------------------------------------------------------------------------------
+# 3. Python Artifacts & Environments
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ------------------------------------------------------------------------------
+# 4. Scratch Scripts, Tests & Logs
+# ------------------------------------------------------------------------------
+scratch/
+*.log
+*.tmp
+*.bak
+
+# ------------------------------------------------------------------------------
+# 5. Secrets & Environment Configurations
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------------------------------------------
+# 6. IDE, Editor & OS-Specific Files
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+desktop.ini

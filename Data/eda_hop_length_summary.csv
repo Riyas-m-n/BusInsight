@@ -1,0 +1,5 @@
+hop_tier,total_journeys,min_duration_min,avg_duration_min,median_duration_min,p10_duration_min,p90_duration_min,iqr_duration_min,std_duration_min,cv_duration
+1. Short (1-5 hops),3584033,0.02,5.41,4.67,1.07,10.35,5.15,4.11,0.7601
+2. Medium (6-15 hops),5534657,1.05,20.46,19.08,10.3,32.25,11.83,9.06,0.4428
+3. Long (16-30 hops),4537680,6.35,45.12,43.97,29.75,61.55,17.42,12.73,0.2822
+4. Very Long (>30 hops),821316,15.77,67.14,65.9,54.5,81.37,13.42,11.25,0.1676

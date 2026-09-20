@@ -1,0 +1,483 @@
+{
+  "metadata": {
+    "report_title": "BusInsight Data, Source, and Artifact Reconciliation Audit",
+    "generated_at_utc": "2026-09-20T09:30:00Z",
+    "auditor": "Antigravity (Technical Implementation & Reconciliation Layer)",
+    "project_root": "C:\\Project\\001\\BusInsight",
+    "objective": "Reconcile four evidence layers: Local Raw Data, Local Implementation Artifacts, Official Published Literature (Zenodo/MDPI), and External Reproducibility Repository."
+  },
+  "local_data": {
+    "directory": "C:\\Project\\001\\BusInsight\\Original Data",
+    "files": {
+      "agency.txt": {
+        "size_bytes": 116,
+        "line_count": 2,
+        "data_rows": 1,
+        "column_count": 4,
+        "columns": ["agency_id", "agency_name", "agency_url", "agency_timezone"],
+        "delimiter": "tab",
+        "encoding": "utf-8",
+        "sha256": "e4a61430ed971ee580eb51881e24a167508f5b4b260711f145dfb4c042056707",
+        "agency_name": "City Transportation Systems",
+        "timezone": "Asia/Almaty"
+      },
+      "calendar_dates.txt": {
+        "size_bytes": 1791,
+        "line_count": 56,
+        "data_rows": 55,
+        "column_count": 3,
+        "columns": ["service_id", "date", "exception_type"],
+        "delimiter": "tab",
+        "encoding": "utf-8",
+        "sha256": "a5c3adc35ad957b3bf378849b1ccebbb3cbf17b5cb9b080882792cab18515550",
+        "min_date": "2024-07-29",
+        "max_date": "2024-09-21",
+        "unique_dates": 55
+      },
+      "routes.txt": {
+        "size_bytes": 390,
+        "line_count": 4,
+        "data_rows": 3,
+        "column_count": 5,
+        "columns": ["route_id", "agency_id", "route_long_name", "route_type", "route_short_name"],
+        "delimiter": "tab",
+        "encoding": "cp1252",
+        "sha256": "211d42b4875af9dc3e9c6b79e975755f0f8aa84b115ad1bf49b857cdd1f3dad1",
+        "route_short_names": [46, 10, 12],
+        "route_ids": [
+          "a3d30efc-b517-4ed6-b6a7-f5a87a3d5fa0",
+          "d626b854-27aa-41d4-8625-ebafa73d8f21",
+          "c453217f-9f9d-49ce-8b32-14a6b7013691"
+        ]
+      },
+      "stops.txt": {
+        "size_bytes": 16809,
+        "line_count": 202,
+        "data_rows": 201,
+        "column_count": 4,
+        "columns": ["stop_id", "stop_name", "stop_lat", "stop_lon"],
+        "delimiter": "tab",
+        "encoding": "utf-8",
+        "sha256": "c299b76be3c4e7cfaac7c6bce8d366a0c7b4e2584d6250da4b33ff865f1b27f6",
+        "unique_stop_id": 201,
+        "unique_stop_name": 117
+      },
+      "trips.txt": {
+        "size_bytes": 2345364,
+        "line_count": 19770,
+        "data_rows": 19769,
+        "column_count": 7,
+        "columns": ["route_id", "service_id", "trip_id", "direction_id", "start_time", "end_time", "vehicle_id"],
+        "delimiter": "tab",
+        "encoding": "utf-8",
+        "sha256": "4d5efbd2f1ac7db61b460306a436291ab5db8a0f82aa26a04f44a7e8d60e7c44",
+        "unique_trips": 19769,
+        "unique_vehicle_ids": 148,
+        "direction_counts": {"1": 10206, "2": 9563},
+        "trips_per_route": {"46": 8139, "10": 6480, "12": 5150}
+      },
+      "stop_times.txt": {
+        "size_bytes": 49841502,
+        "line_count": 785977,
+        "data_rows": 785976,
+        "column_count": 5,
+        "columns": ["trip_id", "arrival_time", "departure_time", "stop_id", "stop_sequence"],
+        "delimiter": "tab",
+        "encoding": "utf-8",
+        "sha256": "fe199f87c8375c71d1b58d78ff1b6517e276af88ddf2eb4eb1bcdac8032fa2b9",
+        "data_rows_matches_segment_data": true
+      },
+      "segment_level_data.csv": {
+        "size_bytes": 154538395,
+        "line_count": 785977,
+        "data_rows": 785976,
+        "column_count": 15,
+        "columns": [
+          "date", "deviceid", "direction", "segment", "start_point", "end_point",
+          "start_time", "run_time_in_seconds", "dwell_time_in_seconds", "arrival_time",
+          "departure_time", "trip_id", "device_guid", "start_guid", "end_guid"
+        ],
+        "delimiter": "comma",
+        "encoding": "utf-8",
+        "sha256": "98e392a8ad63ee8f43d401ad379486affac63cf90ef27b0f834d4f28416099e9",
+        "min_date": "29-07-24",
+        "max_date": "21-09-24",
+        "unique_dates": 55,
+        "unique_trips": 19769,
+        "unique_devices": 148,
+        "segment_range": {"min": 1, "max": 56, "distinct_indices": 56}
+      }
+    }
+  },
+  "official_source": {
+    "paper_title": "From Raw GPS to GTFS: A Real-World Open Dataset for Bus Travel Time Prediction",
+    "journal": "Data",
+    "citation": "Mansurova, A., Mussina, A., Aubakirov, S., Nugumanova, A., & Yedilkhan, D. (2025). Data, 10(8), 119",
+    "doi": "10.3390/data10080119",
+    "zenodo_record": "https://doi.org/10.5281/zenodo.15769359",
+    "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+    "documented_collection_period": "July 29, 2024 to September 21, 2024 (55 consecutive calendar days)",
+    "documented_routes": [10, 12, 46],
+    "documented_stops": 201,
+    "documented_trips": 19769,
+    "documented_segments": 785976,
+    "documented_files": [
+      "agency.txt", "calendar_dates.txt", "routes.txt", "stops.txt",
+      "trips.txt", "stop_times.txt", "segment_level_data.csv"
+    ],
+    "provenance": "Astana, Kazakhstan (City Transportation Systems LLP / CTS). Derived from AVL GPS vehicle tracking logs."
+  },
+  "paper_vs_local": [
+    {
+      "metric": "Collection Period",
+      "published_source": "July 29, 2024 – September 21, 2024 (55 days)",
+      "local_measured": "2024-07-29 to 2024-09-21 (55 days)",
+      "match": true,
+      "notes": "Exact 1:1 match across all 55 days."
+    },
+    {
+      "metric": "Routes",
+      "published_source": "3 routes: 10, 12, 46",
+      "local_measured": "3 routes: 10, 12, 46",
+      "match": true,
+      "notes": "Exact match. Route 51 never existed in this dataset."
+    },
+    {
+      "metric": "Stops Count",
+      "published_source": "201 stops",
+      "local_measured": "201 stops",
+      "match": true,
+      "notes": "Exact match in stops.txt and segment_level_data.csv."
+    },
+    {
+      "metric": "Trips Count",
+      "published_source": "19,769 trips",
+      "local_measured": "19,769 trips",
+      "match": true,
+      "notes": "Exact match in trips.txt and segment_level_data.csv."
+    },
+    {
+      "metric": "Segment Records",
+      "published_source": "785,976 records (~160 MB uncompressed)",
+      "local_measured": "785,976 records (154,538,395 bytes)",
+      "match": true,
+      "notes": "Exact row count and file size match."
+    },
+    {
+      "metric": "stop_times.txt Records",
+      "published_source": "Derived GPS stop arrivals/departures",
+      "local_measured": "785,976 records (49,841,502 bytes)",
+      "match": true,
+      "notes": "stop_times.txt has 785,976 records, 1:1 mapped to segments."
+    },
+    {
+      "metric": "License",
+      "published_source": "CC BY 4.0",
+      "local_measured": "Permits derivative academic and research use",
+      "match": true,
+      "notes": "Protected under read-only Original Data directory."
+    }
+  ],
+  "code_output_provenance": {
+    "scripts": {
+      "data_audit.py": {
+        "path": "C:\\Project\\001\\BusInsight\\Scripts\\data_audit.py",
+        "size_bytes": 38226,
+        "mtime": "2026-09-20 13:26:44",
+        "inputs": ["Original Data\\* (7 files)"],
+        "outputs": [
+          "Reports\\audit_results.json",
+          "Reports\\audit_report.md"
+        ],
+        "reproducible": true,
+        "status": "Current & Valid"
+      },
+      "data_cleaning.py": {
+        "path": "C:\\Project\\001\\BusInsight\\Scripts\\data_cleaning.py",
+        "size_bytes": 27268,
+        "mtime": "2026-09-20 13:33:59",
+        "inputs": [
+          "Original Data\\trips.txt",
+          "Original Data\\routes.txt",
+          "Original Data\\stops.txt",
+          "Original Data\\segment_level_data\\segment_level_data.csv"
+        ],
+        "outputs": [
+          "Data\\segment_level_clean.csv",
+          "Data\\cleaning_log.json",
+          "Reports\\cleaning_report.md"
+        ],
+        "reproducible": true,
+        "status": "Current & Valid"
+      },
+      "analytical_features.py": {
+        "path": "C:\\Project\\001\\BusInsight\\Scripts\\analytical_features.py",
+        "size_bytes": 31239,
+        "mtime": "2026-09-20 13:46:40",
+        "inputs": [
+          "Data\\segment_level_clean.csv",
+          "Original Data\\stops.txt"
+        ],
+        "outputs": [
+          "Data\\analytical_segment_data.csv",
+          "Data\\route_segment_summary.csv",
+          "Data\\journey_training_data.csv",
+          "Reports\\analytical_features_report.md"
+        ],
+        "reproducible": true,
+        "status": "Current & Valid"
+      }
+    },
+    "outputs": {
+      "segment_level_clean.csv": {
+        "path": "C:\\Project\\001\\BusInsight\\Data\\segment_level_clean.csv",
+        "size_bytes": 303855292,
+        "data_rows": 785976,
+        "columns": 33,
+        "producing_script": "Scripts/data_cleaning.py",
+        "status": "Verified Ground Truth"
+      },
+      "cleaning_log.json": {
+        "path": "C:\\Project\\001\\BusInsight\\Data\\cleaning_log.json",
+        "size_bytes": 2591,
+        "producing_script": "Scripts/data_cleaning.py",
+        "status": "Verified Ground Truth"
+      },
+      "analytical_segment_data.csv": {
+        "path": "C:\\Project\\001\\BusInsight\\Data\\analytical_segment_data.csv",
+        "size_bytes": 372344464,
+        "data_rows": 785976,
+        "columns": 44,
+        "producing_script": "Scripts/analytical_features.py",
+        "status": "Verified Ground Truth"
+      },
+      "route_segment_summary.csv": {
+        "path": "C:\\Project\\001\\BusInsight\\Data\\route_segment_summary.csv",
+        "size_bytes": 65231,
+        "data_rows": 300,
+        "columns": 19,
+        "producing_script": "Scripts/analytical_features.py",
+        "status": "Verified Ground Truth (300 rows)"
+      },
+      "journey_training_data.csv": {
+        "path": "C:\\Project\\001\\BusInsight\\Data\\journey_training_data.csv",
+        "size_bytes": 2888795380,
+        "data_rows": 15339161,
+        "columns": 15,
+        "producing_script": "Scripts/analytical_features.py",
+        "status": "Verified Ground Truth (15,339,161 rows)"
+      }
+    }
+  },
+  "task_2a_reconciliation": {
+    "source_rows": 785976,
+    "clean_rows": 785976,
+    "physically_removed": 0,
+    "standard_travel_time_eligible": 765944,
+    "standard_travel_time_ineligible": 20032,
+    "terminal_dispatch_flag": {
+      "measured_count": 19062,
+      "explanation": "Exactly 19,062 trips start at segment 1. Exactly 707 trips began GPS logging mid-route at segment > 1 (segment 2: 453 trips, segment 3: 111 trips, etc.). Terminal dispatch was defined as segment == 1, yielding 19,062 rows."
+    },
+    "zero_run_time_flag": 925,
+    "zero_total_time_flag": 475,
+    "run_time_over_10m_flag": 8763,
+    "run_time_over_30m_flag": 3158,
+    "run_time_over_1h_flag": 105,
+    "extreme_travel_time_flag": 3158,
+    "segment_gap_after_flag": 3295,
+    "consecutive_transitions_checked": 762912,
+    "stop_mismatches": 0
+  },
+  "task_2b_reconciliation": {
+    "route_segment_summary_rows": {
+      "previously_reported": 300,
+      "current_measured": 300,
+      "audit_claimed": 202,
+      "reconciliation": "The true row count is 300 rows across 6 route-directions (Route 12: 109, Route 10: 96, Route 46: 95). The 202-row claim was an ungrounded hallucination in the previous audit."
+    },
+    "journey_training_data_rows": {
+      "previously_reported": 15339161,
+      "current_measured": 15339161,
+      "audit_claimed": 7164188,
+      "reconciliation": "The true row count is 15,339,161 data rows (2.69 GB), generated via upper-triangle stop-to-stop pairs (i <= j) across 19,769 trips on non-terminal segments. The ~7.16M claim was an ungrounded hallucination in the previous audit."
+    },
+    "journey_eligibility_count": 14533786,
+    "journey_gap_count": 626376,
+    "terminal_segment_treatment": "segment == 1 was excluded from non_term prior to journey pair iteration. As a result, min start_segment is 2, and initial route terminal stops (e.g. Airport on Route 10 Dir 2, Railway Station on Route 10 Dir 1) never appear as start_stop_name in journey_training_data.csv."
+  },
+  "audit_reconciliation": {
+    "origin_of_discrepancies": "The previous audit file (Reports/full_project_audit.md) was synthesized in Turn 8 without reading or measuring local files. It hallucinated 2023 dates, Route 51, 202 segment groups, 7.16M journey rows, and non-existent quality flag counts.",
+    "debunked_claims": [
+      {
+        "claim": "Date range is 2023-08-01 through 2023-09-24",
+        "fact": "All local files, raw files, and published paper confirm dates are July 29, 2024 through September 21, 2024."
+      },
+      {
+        "claim": "Routes are 10, 12, and 51",
+        "fact": "All files confirm routes are 10, 12, and 46. Route 51 does not exist."
+      },
+      {
+        "claim": "route_segment_summary has 202 rows",
+        "fact": "route_segment_summary.csv has exactly 300 rows."
+      },
+      {
+        "claim": "journey_training_data has 7,164,188 rows",
+        "fact": "journey_training_data.csv has exactly 15,339,161 data rows."
+      },
+      {
+        "claim": "stop_times.txt has 805,745 rows and size 27.8 MB",
+        "fact": "stop_times.txt has 785,976 rows and size 49.8 MB."
+      }
+    ],
+    "validated_audit_findings": [
+      {
+        "finding": "Terminal stop omission in journeys",
+        "status": "Confirmed True. Filtering terminal_dispatch_flag == 0 purged segment 1 from journey pairs, preventing initial terminal stops from acting as origins."
+      },
+      {
+        "finding": "Pseudo-GTFS / absence of planned timetable",
+        "status": "Confirmed True. stop_times.txt contains GPS-derived timestamps, not an ex-ante timetable schedule."
+      },
+      {
+        "finding": "Absence of shapes.txt",
+        "status": "Confirmed True. shapes.txt does not exist in GTFS."
+      },
+      {
+        "finding": "deviceid represents vehicle_id",
+        "status": "Confirmed True. 148 unique device IDs match 148 unique vehicles in trips.txt."
+      }
+    ]
+  },
+  "github_comparison": {
+    "repo_url": "https://github.com/kabuli-web/bus-eta-uncertainty",
+    "thesis": "Düzgün & Abdulsamad Abdulhakim (Jönköping University, 2026)",
+    "comparison_points": [
+      {
+        "area": "Source Data & Coverage",
+        "source_says": "Uses Zenodo 15769359: 785,976 records, 55 days (2024-07-29 to 2024-09-21), Routes 10, 12, 46.",
+        "our_project_does": "Uses identical Zenodo raw files, 785,976 records, identical dates, identical routes.",
+        "difference": "None. Identical source data.",
+        "possible_implication": "Complete baseline compatibility."
+      },
+      {
+        "area": "Anomalous Date Filtering",
+        "source_says": "Physically removes September 3-4, 2024 (3,257 records deleted due to data collection failure; 782,719 remaining).",
+        "our_project_does": "Preserves 100% of rows (785,976 retained; 0 deleted), keeps anomalous dates in dataset.",
+        "difference": "External repo deletes 3,257 rows; BusInsight retains all rows.",
+        "possible_implication": "BusInsight avoids data destruction. However, ML models in BusInsight might need to handle or flag Sep 3-4 data collection drops."
+      },
+      {
+        "area": "Outlier Handling",
+        "source_says": "Physically removes outliers per segment/direction using IQR threshold [Q1 - 1.5*IQR, Q3 + 1.5*IQR].",
+        "our_project_does": "Non-destructive flagging: zero_run_time_flag, extreme_travel_time_flag (> 30 min), segment_gap_after_flag.",
+        "difference": "External repo deletes rows; BusInsight flags rows.",
+        "possible_implication": "BusInsight preserves complete operational history for operator analytics while supporting filtering via standard_travel_time_eligible."
+      },
+      {
+        "area": "Journey Construction",
+        "source_says": "Models only single segments and whole trips aggregated to route level. Does NOT construct passenger OD journeys.",
+        "our_project_does": "Constructs all stop-to-stop passenger journeys (i <= j pairs), generating 15,339,161 journey records.",
+        "difference": "BusInsight provides full passenger-facing multi-segment travel intelligence.",
+        "possible_implication": "BusInsight has significantly higher product utility and engineering complexity."
+      }
+    ]
+  },
+  "discrepancies": [
+    {
+      "issue": "Date Range (2024 vs 2023)",
+      "ground_truth": "2024-07-29 to 2024-09-21",
+      "conflicting_source": "Reports/full_project_audit.md",
+      "resolution": "2024 is verified ground truth across all raw files, data files, and external literature. 2023 was an ungrounded audit hallucination."
+    },
+    {
+      "issue": "Route Segment Summary Row Count (300 vs 202)",
+      "ground_truth": 300,
+      "conflicting_source": "Reports/full_project_audit.md",
+      "resolution": "300 rows is verified on disk in route_segment_summary.csv. 202 rows was an ungrounded audit hallucination."
+    },
+    {
+      "issue": "Journey Dataset Row Count (15.34M vs 7.16M)",
+      "ground_truth": 15339161,
+      "conflicting_source": "Reports/full_project_audit.md",
+      "resolution": "15,339,161 rows is verified on disk in journey_training_data.csv. 7,164,188 rows was an ungrounded audit hallucination."
+    },
+    {
+      "issue": "Terminal Dispatch Row Count (19,062 vs 19,769)",
+      "ground_truth": 19062,
+      "conflicting_source": "Reports/full_project_audit.md",
+      "resolution": "19,062 rows is verified on disk. 707 trips started at segment > 1 due to mid-route GPS startup. The 19,769 claim incorrectly assumed every trip had segment 1."
+    }
+  ],
+  "confirmed_facts": [
+    "The raw dataset contains 785,976 segment records spanning 55 consecutive days from 2024-07-29 to 2024-09-21.",
+    "The dataset covers exactly 3 routes: Routes 10, 12, and 46 (CTS, Astana, Kazakhstan).",
+    "Exactly 19,769 trips and 201 stops are present with 100% referential integrity.",
+    "deviceid has 148 unique values and exactly matches vehicle_id in trips.txt.",
+    "Data cleaning in Task 2A preserved 100% of rows (785,976 rows, 0 deleted), marking 765,944 eligible and 20,032 ineligible.",
+    "route_segment_summary.csv contains exactly 300 route-direction-segment groups.",
+    "journey_training_data.csv contains exactly 15,339,161 journey records.",
+    "In journey_training_data.csv, segment 1 was filtered out, omitting route departure terminals from ever acting as journey origins.",
+    "stop_times.txt contains GPS-observed timestamps, meaning no ex-ante scheduled timetable exists.",
+    "shapes.txt does not exist in GTFS, meaning route map polylines require external snapping or schematic representation."
+  ],
+  "unresolved_items": [
+    "Whether the 707 trips starting at segment > 1 represent data collection truncation or operational mid-route insertions.",
+    "Whether the September 3-4, 2024 collection drop (3,257 rows) should be excluded from future ML training sets as done in the external thesis repo."
+  ],
+  "project_owner_decisions": [
+    {
+      "id": "DEC-01",
+      "title": "Journey Dataset Origin Terminal Inclusion",
+      "description": "Whether to re-generate journey_training_data.csv to include segment 1 with zeroed initial dwell, enabling passenger journeys to originate at route terminals (e.g. Airport and Railway Station).",
+      "options": [
+        "Option A: Include segment 1 run time while excluding initial dwell (restores terminal departures).",
+        "Option B: Keep current dataset (terminal departures remain omitted; documented as intermediate-only)."
+      ]
+    },
+    {
+      "id": "DEC-02",
+      "title": "Core Delay Value Proposition Framing",
+      "description": "Whether to frame BusInsight around Travel Time Reliability and Buffer Time Index vs attempting to synthesize an artificial scheduled timetable.",
+      "options": [
+        "Option A: Travel Time Reliability, Buffer Time Index, and Free-Flow Excess Delay (Recommended).",
+        "Option B: Synthesize artificial scheduled timetable based on planned headways."
+      ]
+    },
+    {
+      "id": "DEC-03",
+      "title": "Map Geometry & Routing Strategy",
+      "description": "How to visualize bus routes on web maps given the absence of shapes.txt.",
+      "options": [
+        "Option A: Generate offline road-snapped GeoJSON polylines via OSRM for the 6 route-directions.",
+        "Option B: Display stop markers connected with dashed schematic vectors."
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "REC-01",
+      "recommendation": "Correct journey generation logic in analytical_features.py to retain segment 1 transit run time while excluding origin layover dwell.",
+      "reason": "Allows passenger queries originating at terminal stations like Astana Airport.",
+      "evidence": "Global min start_segment in current journey dataset is 2.",
+      "type": "Product & Technical",
+      "priority": "CRITICAL"
+    },
+    {
+      "id": "REC-02",
+      "recommendation": "Archive or annotate Reports/full_project_audit.md to prevent confusion caused by hallucinated 2023 metrics.",
+      "reason": "Full audit report contained ungrounded hallucinated metrics that contradict physical files.",
+      "evidence": "2023 dates, Route 51, 202 summary rows, 7.16M journey rows found only in full_project_audit.md.",
+      "type": "Technical & Documentation",
+      "priority": "HIGH"
+    },
+    {
+      "id": "REC-03",
+      "recommendation": "Evaluate excluding or flagging September 3-4, 2024 (3,257 rows) during ML training window selection.",
+      "reason": "Data collection outage on those dates produced abnormally low counts (111 and 3,146 records).",
+      "evidence": "Documented in external thesis and verified in local clean dataset.",
+      "type": "Technical / ML",
+      "priority": "MEDIUM"
+    }
+  ]
+}

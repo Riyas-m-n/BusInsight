@@ -1,0 +1,13 @@
+route_short_name,direction_id,segment_class,n_observations,avg_dwell_sec,median_dwell_sec,p90_dwell_sec,std_dwell_sec,iqr_dwell_sec,zero_dwell_count,zero_dwell_pct,dwell_over_30s_count,dwell_over_30s_pct,dwell_over_60s_count,dwell_over_60s_pct,dwell_share_of_total_time_pct
+10,1,Terminal Dispatch (Segment 1),3334,990.91,506.5,2372.0,1134.43,1864.25,3.0,0.09,2984.0,89.5,2757.0,82.69,50.0
+10,1,Standard Passenger Stops (Segment > 1),115483,29.17,27.0,53.0,25.95,22.0,7268.0,6.29,47978.0,41.55,7620.0,6.6,23.06
+10,2,Terminal Dispatch (Segment 1),3114,53.49,38.0,80.0,87.14,24.0,17.0,0.55,2178.0,69.94,540.0,17.34,50.0
+10,2,Standard Passenger Stops (Segment > 1),121312,27.04,25.0,45.0,29.48,16.0,8699.0,7.17,37833.0,31.19,4833.0,3.98,22.24
+12,1,Terminal Dispatch (Segment 1),2904,816.06,30.5,2331.0,1015.96,1821.25,14.0,0.48,1452.0,50.0,1378.0,47.45,50.0
+12,1,Standard Passenger Stops (Segment > 1),108860,25.24,24.0,43.0,24.39,17.0,6367.0,5.85,31934.0,29.33,3421.0,3.14,21.69
+12,2,Terminal Dispatch (Segment 1),2188,34.45,28.0,60.0,29.69,20.0,52.0,2.38,960.0,43.88,214.0,9.78,50.0
+12,2,Standard Passenger Stops (Segment > 1),93703,24.88,24.0,41.0,19.97,14.0,6273.0,6.69,25387.0,27.09,2315.0,2.47,22.73
+46,1,Terminal Dispatch (Segment 1),3825,928.8,546.0,2433.6,947.59,1718.0,213.0,5.57,3093.0,80.86,2918.0,76.29,50.0
+46,1,Standard Passenger Stops (Segment > 1),156158,23.85,22.0,44.0,23.0,19.0,10052.0,6.44,42398.0,27.15,5208.0,3.34,19.68
+46,2,Terminal Dispatch (Segment 1),3697,88.96,35.0,278.4,130.79,56.0,105.0,2.84,2167.0,58.62,1065.0,28.81,50.0
+46,2,Standard Passenger Stops (Segment > 1),171398,26.58,23.0,46.0,26.44,17.0,7373.0,4.3,49964.0,29.15,7811.0,4.56,20.7

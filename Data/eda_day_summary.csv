@@ -1,0 +1,8 @@
+day_of_week,day_name,is_weekend,total_journeys,distinct_trips,avg_duration_min,median_duration_min,p10_duration_min,p90_duration_min,iqr_duration_min,std_duration_min
+0,Monday,0,2223044,3037,27.41,22.92,3.73,58.05,31.75,20.93
+1,Tuesday,0,2091733,2831,27.64,23.27,3.8,58.37,32.13,20.87
+2,Wednesday,0,2143595,2889,28.14,23.52,3.82,59.5,32.87,21.46
+3,Thursday,0,2122112,2900,27.56,22.97,3.7,58.6,32.05,21.1
+4,Friday,0,2161648,2969,27.8,23.37,3.78,58.83,32.38,21.03
+5,Saturday,1,2065684,2791,25.91,22.3,3.72,54.2,29.8,18.95
+6,Sunday,1,1669870,2268,24.76,21.33,3.65,51.62,28.12,18.02

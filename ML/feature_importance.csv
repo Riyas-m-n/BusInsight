@@ -1,0 +1,11 @@
+feature,importance_mean_mae_drop_seconds,importance_std,relative_importance_pct
+segments_traversed,1047.95,5.01,81.59
+start_stop_idx,94.41,0.29,7.35
+dest_stop_idx,87.42,0.16,6.81
+start_segment,22.37,0.38,1.74
+route_short_name,13.18,0.32,1.03
+destination_segment,11.57,0.38,0.9
+day_of_week,6.25,0.37,0.49
+is_weekend,1.21,0.08,0.09
+direction_id,0.01,0.01,0.0
+month,0.0,0.0,0.0

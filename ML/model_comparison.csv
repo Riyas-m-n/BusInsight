@@ -1,0 +1,5 @@
+model_name,model_type,library,training_time_seconds,val_n_obs,val_mae_seconds,val_mae_minutes,val_rmse_seconds,val_rmse_minutes,val_r2,mae_improvement_vs_baseline_sec,mae_improvement_pct,rmse_improvement_vs_baseline_sec,r2_improvement
+Historical Median Baseline,Historical Baseline Lookup (Hierarchical),BusInsight Baseline Engine,0.0,2269507,191.91,3.2,325.23,5.42,0.9305,0.0,0.0,0.0,0.0
+Ridge Regressor,Linear Model (L2 Regularized),scikit-learn 1.2.1,1.28,2269507,291.57,4.86,410.58,6.84,0.8892,-99.66,-51.93,-85.35,-0.0413
+HistGradientBoosting (Squared Error),Histogram Gradient Boosted Trees (L2 Loss),scikit-learn 1.2.1,55.15,2269507,178.03,2.97,295.76,4.93,0.9425,13.88,7.24,29.47,0.012
+HistGradientBoosting (Absolute Error),Histogram Gradient Boosted Trees (L1 Loss),scikit-learn 1.2.1,98.31,2269507,179.02,2.98,309.26,5.15,0.9371,12.89,6.72,15.97,0.0066

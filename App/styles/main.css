@@ -1,0 +1,161 @@
+/* BusInsight Custom Theme Styling */
+
+:root {
+    --brand-navy: #1B365D;
+    --brand-blue: #2563EB;
+    --brand-teal: #0D9488;
+    --brand-amber: #D97706;
+    --brand-red: #DC2626;
+    --surface-card: #FFFFFF;
+    --surface-bg: #F8FAFC;
+    --border-color: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+}
+
+/* Header Banner */
+.businsight-header {
+    background: linear-gradient(135deg, #1B365D 0%, #1E40AF 100%);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    color: #FFFFFF;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.businsight-header h1 {
+    color: #FFFFFF !important;
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.businsight-header p {
+    color: #E2E8F0 !important;
+    font-size: 1rem !important;
+    margin: 0.3rem 0 0 0 !important;
+}
+
+/* Honesty Banner */
+.honesty-banner {
+    background-color: #FEF3C7;
+    border-left: 4px solid #D97706;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    color: #92400E;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+}
+
+/* Prediction Result Card */
+.prediction-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-top: 5px solid #2563EB;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.prediction-value {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #1E40AF;
+    line-height: 1.1;
+}
+
+.prediction-unit {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.prediction-meta {
+    font-size: 0.9rem;
+    color: #64748B;
+    margin-top: 0.5rem;
+}
+
+/* Metric KPI Card */
+.kpi-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.kpi-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+}
+
+.kpi-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin-top: 0.2rem;
+}
+
+.kpi-subtitle {
+    font-size: 0.8rem;
+    color: #64748B;
+    margin-top: 0.2rem;
+}
+
+/* Badge Styles */
+.badge-blue {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.badge-amber {
+    background-color: #FEF3C7;
+    color: #92400E;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.badge-green {
+    background-color: #D1FAE5;
+    color: #065F46;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Step Progress Indicator */
+.step-container {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background: #F1F5F9;
+    border-radius: 8px;
+}
+
+.step-node {
+    font-weight: 600;
+    color: #1E293B;
+    font-size: 0.95rem;
+}
+
+.step-arrow {
+    margin: 0 0.75rem;
+    color: #94A3B8;
+    font-size: 1.1rem;
+}

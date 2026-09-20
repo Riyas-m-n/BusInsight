@@ -1,0 +1,26 @@
+{
+  "selected_model": "HistGradientBoosting (Squared Error)",
+  "n_observations": 2281911,
+  "prediction_time_seconds": 6.44,
+  "baseline": {
+    "mae_seconds": 202.48,
+    "mae_minutes": 3.37,
+    "rmse_seconds": 358.98,
+    "rmse_minutes": 5.98,
+    "r2_score": 0.9171
+  },
+  "selected_model_metrics": {
+    "mae_seconds": 189.54,
+    "mae_minutes": 3.16,
+    "rmse_seconds": 332.22,
+    "rmse_minutes": 5.54,
+    "r2_score": 0.929
+  },
+  "comparison": {
+    "abs_mae_difference": 12.94,
+    "pct_mae_improvement": 6.39,
+    "abs_rmse_difference": 26.76,
+    "pct_rmse_improvement": 7.45,
+    "abs_r2_difference": 0.0119
+  }
+}
