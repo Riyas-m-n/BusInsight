@@ -1,10 +1,10 @@
 """
 BusInsight - Passenger Journey Estimator Component
-Renders the interactive pre-journey travel time estimation interface with
-dependent stop selections, model inference, baseline comparison, and transparency notices.
+Renders the primary, public-facing travel-time estimation interface with
+cascading selectors, prominent journey duration result, and empirical error framing.
 """
 
-from datetime import date, datetime
+from datetime import date
 import streamlit as st
 
 from ..services.metadata_service import (
@@ -20,27 +20,23 @@ from ..services.baseline_service import get_baseline_estimate
 
 def render_passenger_view():
     """Renders the Passenger Journey Estimator page."""
+    # Top Section Intro
     st.markdown("""
-        <div style="margin-bottom: 24px;">
-            <h1 style="margin-bottom: 6px;">Passenger Journey-Time Estimator</h1>
-            <p style="color: #64748b; font-size: 1.05rem; margin: 0;">
-                Pre-journey travel time estimation powered by gradient-boosted historical regression.
+        <div style="margin-bottom: 20px;">
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; padding: 3px 12px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; margin-bottom: 8px;">
+                🚌 Public Passenger Planner
+            </div>
+            <h1 style="margin: 0 0 6px 0; font-size: 2.1rem; color: #0F172A;">Plan a Bus Journey</h1>
+            <p style="color: #64748B; font-size: 1.05rem; margin: 0;">
+                Select your corridor and stops to estimate travel time derived from historical Astana transit observations.
             </p>
         </div>
     """, unsafe_allow_html=True)
 
-    # Informational banner
-    st.info(
-        "**Historical Pre-Journey Prototype**: This tool provides travel-time estimates derived from "
-        "historical transit telemetry using 10 strictly pre-journey features. "
-        "It does not use live GPS tracking, live bus positions, or real-time traffic data.",
-        icon="ℹ️"
-    )
-
     col_form, col_results = st.columns([1, 1], gap="large")
 
     with col_form:
-        st.markdown("### 1. Select Journey Parameters")
+        st.markdown("### 1. Journey Parameters")
 
         # 1. Route Selector
         routes = get_available_routes()
@@ -49,7 +45,7 @@ def render_passenger_view():
             "Transit Route",
             options=routes,
             format_func=lambda r: route_options[r],
-            help="Select one of the three monitored Astana transit corridors."
+            help="Select one of the three monitored Astana transit trunk corridors."
         )
 
         route_info = get_route_info(selected_route)
@@ -75,14 +71,14 @@ def render_passenger_view():
             return
 
         boarding_options = {
-            s["segment"]: f"Stop: {s['stop_name']} (Seg #{s['segment']})"
+            s["segment"]: f"{s['stop_name']} (Stop #{s['segment']})"
             for s in boarding_stops
         }
         selected_start_segment = st.selectbox(
             "Boarding Stop (Origin)",
             options=[s["segment"] for s in boarding_stops],
             format_func=lambda seg: boarding_options[seg],
-            help="Select your boarding stop. Note: Terminal dispatch segment 1 is excluded from origin stops."
+            help="Select your boarding stop. Note: Terminal dispatch (Segment 1) is excluded from origin options per operational layover isolation."
         )
 
         selected_start_stop = next(s for s in boarding_stops if s["segment"] == selected_start_segment)
@@ -99,34 +95,33 @@ def render_passenger_view():
             return
 
         dest_options = {
-            d["segment"]: f"Stop: {d['stop_name']} (+{d['segments_traversed']} hops)"
+            d["segment"]: f"{d['stop_name']} (+{d['segments_traversed']} stops)"
             for d in destination_stops
         }
         selected_dest_segment = st.selectbox(
             "Destination Stop",
             options=[d["segment"] for d in destination_stops],
             format_func=lambda seg: dest_options[seg],
-            help="Select your destination stop along the route."
+            help="Select your destination stop along the route corridor."
         )
 
         selected_dest_stop = next(d for d in destination_stops if d["segment"] == selected_dest_segment)
 
         # 5. Travel Date Selector
-        st.markdown("#### Travel Date")
         selected_date = st.date_input(
             "Planned Travel Date",
             value=date(2024, 8, 14),
-            help="Date determines day-of-week, weekend indicator, and seasonal calendar features."
+            help="Date determines day-of-week, weekend indicator, and monthly seasonal calendar features."
         )
 
         day_name = selected_date.strftime("%A")
         is_wknd = selected_date.weekday() in [5, 6]
-        st.caption(f"Selected: **{day_name}** ({'Weekend' if is_wknd else 'Weekday'})")
+        st.caption(f"Operating schedule basis: **{day_name}** ({'Weekend' if is_wknd else 'Weekday'})")
 
     with col_results:
-        st.markdown("### 2. Journey Estimation Results")
+        st.markdown("### 2. Estimated Travel Time")
 
-        # Run Prediction
+        # Execute Prediction
         prediction_result = predict_journey_duration(
             route_short_name=selected_route,
             direction_id=selected_direction,
@@ -137,7 +132,7 @@ def render_passenger_view():
             journey_date=selected_date
         )
 
-        # Baseline Historical Lookup
+        # Lookup Baseline
         baseline_result = get_baseline_estimate(
             route_short_name=selected_route,
             direction_id=selected_direction,
@@ -149,93 +144,60 @@ def render_passenger_view():
             pred_sec = prediction_result["predicted_seconds"]
             pred_min = prediction_result["predicted_minutes"]
             hops = prediction_result["segments_traversed"]
+            base_min = baseline_result["baseline_median_minutes"]
 
-            # Key Metric Display
+            # Dominant Primary Journey Result Card
             st.markdown(f"""
-                <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-                            border-radius: 12px; padding: 24px; color: white; margin-bottom: 20px;
-                            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);">
-                    <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8;">
-                        Estimated Travel Time
+                <div style="background: #FFFFFF; border: 2px solid #2563EB; border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 8px 16px -4px rgba(37, 99, 235, 0.1);">
+                    <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: #2563EB; margin-bottom: 4px;">
+                        YOUR JOURNEY &bull; ROUTE {selected_route} ({dir_labels.get(selected_direction, '')})
                     </div>
-                    <div style="font-size: 2.75rem; font-weight: 800; color: #38bdf8; line-height: 1.1; margin: 6px 0;">
-                        {pred_min:.1f} <span style="font-size: 1.25rem; font-weight: 500; color: #cbd5e1;">min</span>
+                    <div style="font-size: 1.15rem; font-weight: 700; color: #0F172A; margin-bottom: 16px;">
+                        {selected_start_stop['stop_name']} &rarr; {selected_dest_stop['stop_name']}
                     </div>
-                    <div style="font-size: 0.95rem; color: #94a3b8;">
-                        ≈ {int(pred_sec)} seconds &nbsp;|&nbsp; <strong>{hops}</strong> corridor segments traversed
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Estimated Journey Time
+                    </div>
+                    <div style="font-size: 3.6rem; font-weight: 800; color: #1E40AF; line-height: 1.05; margin: 4px 0 8px 0;">
+                        {pred_min:.0f} <span style="font-size: 1.35rem; font-weight: 600; color: #475569;">min</span>
+                    </div>
+                    <div style="font-size: 0.95rem; color: #64748B;">
+                        &asymp; {int(pred_sec)} seconds &bull; <strong>{hops}</strong> corridor segments ({hops} stops)
                     </div>
                 </div>
             """, unsafe_allow_html=True)
 
-            # Secondary comparison metrics
-            m_col1, m_col2, m_col3 = st.columns(3)
+            # Secondary Context Metrics
+            m_col1, m_col2 = st.columns(2)
             with m_col1:
                 st.metric(
                     label="Model Test Error",
-                    value="3.2 min",
-                    delta="Test MAE (189.5s)",
-                    delta_color="off",
-                    help="Historical Mean Absolute Error (MAE) measured on the out-of-time test set (2.28M observations). Note: This is an aggregate historical model error metric, not an individual prediction uncertainty bound."
+                    value="MAE: 3.2 min",
+                    help="Historical Mean Absolute Error measured across the out-of-time test set (2.28M observations). This is an aggregate model error metric, not an individual prediction uncertainty interval."
                 )
+                st.caption("_Aggregate error across historical test set; not an individual journey uncertainty range._")
+
             with m_col2:
-                base_min = baseline_result["baseline_median_minutes"]
                 if base_min is not None:
                     delta_val = round(pred_min - base_min, 1)
                     st.metric(
-                        label="Historical Median",
+                        label="Historical Median Baseline",
                         value=f"{base_min:.1f} min",
                         delta=f"{delta_val:+.1f} min vs model",
                         delta_color="inverse",
-                        help=f"Empirical median from {baseline_result['sample_count']:,} historical observations."
+                        help=f"Empirical median calculated from {baseline_result['sample_count']:,} historical observations."
                     )
+                    st.caption(f"_{baseline_result['sample_count']:,} historical training observations for this OD pair._")
                 else:
-                    st.metric(label="Historical Median", value="N/A")
-            with m_col3:
-                st.metric(
-                    label="Corridor Distance",
-                    value=f"{hops} hops",
-                    help=f"Segments traversed from Segment {selected_start_segment} to {selected_dest_segment}."
-                )
+                    st.metric(label="Historical Median Baseline", value="N/A")
+                    st.caption("_No exact segment-pair samples in historical baseline lookup._")
 
-            # Journey Summary Card
-            st.markdown("#### Journey Details")
-            st.markdown(f"""
-                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #64748b; font-size: 0.9rem;">Origin Stop</span>
-                        <span style="font-weight: 600; font-size: 0.9rem;">{selected_start_stop['stop_name']}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #64748b; font-size: 0.9rem;">Destination Stop</span>
-                        <span style="font-weight: 600; font-size: 0.9rem;">{selected_dest_stop['stop_name']}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #64748b; font-size: 0.9rem;">Corridor Span</span>
-                        <span style="font-weight: 600; font-size: 0.9rem;">Segment #{selected_start_segment} → #{selected_dest_segment}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 0.9rem;">Historical Sample Basis</span>
-                        <span style="font-weight: 600; font-size: 0.9rem;">{baseline_result.get('sample_count', 0):,} observations</span>
-                    </div>
+            # Compact Disclaimer
+            st.markdown("""
+                <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-left: 4px solid #2563EB; padding: 12px 14px; border-radius: 6px; margin-top: 18px; font-size: 0.85rem; color: #334155; line-height: 1.5;">
+                    <strong>Historical predictive prototype</strong> &mdash; this estimate is based on historical transit observations and is not live bus tracking or real-time ETA. Predictions reflect observed normal operating conditions using strictly pre-journey features.
                 </div>
             """, unsafe_allow_html=True)
 
-            # Model feature vector expander
-            with st.expander("View Encoded Pre-Journey Features (Auditing)"):
-                st.json(prediction_result.get("feature_vector_dict", {}))
-
         else:
             st.error(f"Prediction Error: {prediction_result.get('error', 'Unknown error')}")
-
-        # Transparency / Disclaimer Box
-        st.markdown("""
-            <div style="background-color: #fefce8; border-left: 4px solid #eab308; padding: 12px 14px; border-radius: 4px; margin-top: 16px; font-size: 0.85rem; color: #713f12;">
-                <strong>Methodology & Limitations Notice:</strong>
-                <ul style="margin: 4px 0 0 16px; padding: 0;">
-                    <li>Predictions are generated solely from 10 strictly pre-journey features (hop count, stop indices, day of week, calendar month).</li>
-                    <li>No post-journey knowledge or live telematics are used (zero data leakage).</li>
-                    <li>Terminal dispatch (Segment 1) is excluded from origin choices due to operational layover characteristics.</li>
-                    <li>Actual travel times may fluctuate due to localized incidents, weather, or operational variations.</li>
-                </ul>
-            </div>
-        """, unsafe_allow_html=True)
